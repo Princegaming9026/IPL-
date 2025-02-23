@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Loading Animation Hide After 3 Sec
     setTimeout(() => {
         document.getElementById("loading").style.display = "none";
+        document.getElementById("videoContainer").style.display = "block";
         playMedia();
     }, 3000);
 });
 
 async function playMedia() {
     try {
-        // Fetching M3U8 Link from config.json
+        // Fetch M3U8 link from config.json
         const response = await fetch("config.json");
         const config = await response.json();
         const m3u8Link = config.m3u8;
@@ -18,18 +18,20 @@ async function playMedia() {
             return;
         }
 
-        // JWPlayer Setup
-        const playerInstance = jwplayer("jwplayerDiv").setup({
-            file: m3u8Link,
-            type: "hls",
-            autostart: true,
-            preload: "auto",
-            repeat: true,
-            mute: false,
-            stretching: "exactfit",
-            width: "100%",
-            height: "100vh",
-            cast: {},
-            setPip: true,
-            skin: {
-                name: "Denver",
+        const video = document.getElementById("videoPlayer");
+
+        if (Hls.isSupported()) {
+            const hls = new Hls();
+            hls.loadSource(m3u8Link);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                video.play();
+            });
+        } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+            video.src = m3u8Link;
+            video.play();
+        }
+    } catch (error) {
+        console.error("Error loading M3U8:", error);
+    }
+}
