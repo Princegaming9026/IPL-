@@ -2,7 +2,7 @@
 header("Content-Type: application/vnd.apple.mpegurl");
 
 // Token for Secure Access
-$valid_token = "secure123";  // Change this for extra security
+$valid_token = "secure123";
 $user_token = isset($_GET['token']) ? $_GET['token'] : '';
 
 if ($user_token !== $valid_token) {
