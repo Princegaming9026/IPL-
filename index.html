@@ -2,98 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> | PLAY</title>
-    <link rel="shortcut icon" href="https://dthhyderabad.in/wp-content/uploads/2019/09/1.jpg">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@3.6.2/dist/plyr.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>| PLAY</title>
+    <link rel="shortcut icon" type="image/x-icon" href="https://dthhyderabad.in/wp-content/uploads/2019/09/1.jpg">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- jQuery, Plyr, HLS.js -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/plyr@3.6.12/dist/plyr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@1.1.4/dist/hls.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-    <style>
-        html, body {
-            font-family: Poppins, sans-serif;
-            background: #000;
-            margin: 0;
-            padding: 0;
-            color: #fff;
-            text-align: center;
-        }
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .loading-text {
-            font-size: 50px;
-            font-weight: bold;
-            color: purple;
-            text-transform: uppercase;
-        }
-        .join-channel {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: purple;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 18px;
-            text-decoration: none;
-            display: none;
-        }
-        .join-channel:hover {
-            background: #800080;
-        }
-    </style>
 </head>
 <body>
 
     <!-- Loading Animation -->
     <div class="loading" id="loading">
-        <div class="loading-text">MADARA</div>
+        <div class="loading-text">
+            <span>M</span><span>A</span><span>D</span><span>A</span><span>R</span><span>A</span>
+        </div>
     </div>
 
-    <!-- Video Player -->
-    <video id="player" controls autoplay crossorigin playsinline>
+    <!-- Video Player with Secure Token -->
+    <video id="player" autoplay controls crossorigin playsinline poster="">
         <source type="application/vnd.apple.mpegurl" src="stream.php?token=secure123">
     </video>
 
-    <!-- Join Telegram Button -->
-    <a href="https://t.me/+v0D91D8S9LNmMzE1" class="join-channel" id="joinChannel">Join Telegram Channel</a>
+    <!-- Join Channel Button -->
+    <div class="join-channel" id="joinChannel">
+        <a href="https://t.me/+v0D91D8S9LNmMzE1" target="_blank">Join Telegram Channel</a>
+    </div>
 
-    <script>
-        // Hide loading screen after 3 seconds
-        setTimeout(() => {
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('joinChannel').style.display = 'block';
-        }, 3000);
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const video = document.getElementById("player");
-            const source = video.getElementsByTagName("source")[0].src;
-            const playerOptions = {};
-
-            if (Hls.isSupported()) {
-                const hls = new Hls();
-                hls.loadSource(source);
-                hls.on(Hls.Events.MANIFEST_PARSED, () => {
-                    new Plyr(video, playerOptions);
-                });
-                hls.attachMedia(video);
-                window.hls = hls;
-            } else {
-                new Plyr(video, playerOptions);
-            }
-        });
-    </script>
+    <!-- External JavaScript -->
+    <script src="script.js"></script>
 
 </body>
 </html>
