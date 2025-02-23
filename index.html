@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>| PLAY</title>
+    <title>MADARA</title>
     <link rel="shortcut icon" type="image/x-icon" href="https://dthhyderabad.in/wp-content/uploads/2019/09/1.jpg">
     
     <!-- Plyr CSS -->
@@ -75,7 +75,7 @@
         .join-channel {
             display: none;
             position: absolute;
-            bottom: 20px;
+            bottom: 60px; /* Moved Up */
             left: 50%;
             transform: translateX(-50%);
             background: #800080;
@@ -156,6 +156,18 @@
                 new Plyr(video, options);
             }
         });
+
+        // Auto-rotate screen when entering fullscreen
+        document.getElementById('player').addEventListener('fullscreenchange', () => {
+            if (document.fullscreenElement) {
+                // Rotate to landscape mode
+                screen.orientation.lock('landscape').catch(err => console.log(err));
+            } else {
+                // Unlock rotation when exiting fullscreen
+                screen.orientation.unlock();
+            }
+        });
+
     </script>
 
 </body>
