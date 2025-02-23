@@ -11,7 +11,7 @@ if ($user_token !== $valid_token) {
 }
 
 // Original M3U8 Stream URL (HIDDEN from Frontend)
-$m3u8_url = "https://jcevents.jiocinema.com/bpk-tv/JC_Sports18_1HD/JCHLS/hdntl=exp=1740378932~acl=%2F*~id=aaf549ec51984c86b32dd7de3e1334c7~data=hdntl~hmac=6029ae6ff841ccbb41d820a46f0a255ad02a678707e7c6ad9a63bd546d3ee24d/JC_Sports18_1HD-audio_108038_eng=108000-video=2297600.m3u8";
+$m3u8_url = "http://link.luckonline.eu/live/0c:89:10:e8:1c:d4/869/505.m3u8";
 
 // Fetch Stream & Serve as Proxy
 $ch = curl_init();
