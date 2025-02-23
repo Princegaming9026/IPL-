@@ -22,6 +22,7 @@
             margin: 0;
             padding: 0;
             text-align: center;
+            color: #fff;
         }
 
         /* Loading Screen */
@@ -43,7 +44,7 @@
             margin: 0 5px;
             font-size: 50px;
             font-weight: bold;
-            color: purple; /* Changed to Purple */
+            color: purple;
             font-family: 'Quattrocento Sans', sans-serif;
             animation: blur-text 1.5s infinite linear alternate;
         }
@@ -69,6 +70,27 @@
             border: 2px solid #fff;
             border-radius: 10px;
         }
+
+        /* Join Telegram Button */
+        .join-channel {
+            display: none;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: purple;
+            color: #fff;
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .join-channel:hover {
+            background: #800080;
+        }
     </style>
 </head>
 <body>
@@ -86,14 +108,18 @@
     </div>
 
     <!-- Video Player -->
-    <video id="player" autoplay controls crossorigin playsinline poster="">
-        <source type="application/vnd.apple.mpegurl" src="https://prod-ent-live-gm.jiocinema.com/hls/live/2100322/uhd_akamai_ctv_avc_hin_ipl_s1_m1240524/master.m3u8">
+    <video id="player" autoplay controls crossorigin playsinline>
+        <source type="application/vnd.apple.mpegurl" src="https://jcevents.jiocinema.com/bpk-tv/JC_Sports18_1HD/JCHLS/hdntl=exp=1740378932~acl=%2F*~id=aaf549ec51984c86b32dd7de3e1334c7~data=hdntl~hmac=6029ae6ff841ccbb41d820a46f0a255ad02a678707e7c6ad9a63bd546d3ee24d/JC_Sports18_1HD-audio_108038_eng=108000-video=2297600.m3u8">
     </video>
 
+    <!-- Join Telegram Button -->
+    <a href="https://t.me/+v0D91D8S9LNmMzE1" class="join-channel" id="joinChannel">Join Telegram Channel</a>
+
     <script>
-        // Hide loading screen after 3 seconds
+        // Hide loading screen after 3 seconds and show Join Telegram button
         setTimeout(() => {
             document.getElementById('loading').style.display = 'none';
+            document.getElementById('joinChannel').style.display = 'block';
         }, 3000);
 
         document.addEventListener("DOMContentLoaded", () => {
