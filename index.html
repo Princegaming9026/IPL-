@@ -2,95 +2,133 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Player</title>
-    <link rel="shortcut icon" href="https://i.postimg.cc/YC3Npf10/image.webp">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>| PLAY</title>
+    <link rel="shortcut icon" type="image/x-icon" href="https://dthhyderabad.in/wp-content/uploads/2019/09/1.jpg">
     
+    <!-- Plyr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@3.6.2/dist/plyr.css">
+    
+    <!-- jQuery, Plyr, HLS.js -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/plyr@3.6.12/dist/plyr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.1.4/dist/hls.min.js"></script>
+
     <style>
-        /* Background Styling */
-        body {
+        html, body {
+            font-family: Poppins, sans-serif;
+            background: #000;
             margin: 0;
-            background: #000000; /* Pure Black */
-            color: white;
-            font-family: "Poppins", sans-serif;
+            padding: 0;
             text-align: center;
-            overflow: hidden;
         }
 
         /* Loading Screen */
         .loading {
             position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: #000000; /* Pure Black */
+            background: #000;
             display: flex;
-            justify-content: center;
             align-items: center;
-            font-size: 3rem; /* 25% Smaller */
-            font-weight: bold;
-            z-index: 999;
+            justify-content: center;
+            z-index: 9999;
         }
 
-        /* Stylish Blurry Text Animation */
-        @keyframes blurText {
-            0%, 100% { 
-                filter: blur(0px);
-                text-shadow: 0 0 10px rgba(128, 0, 255, 0.8);
-                transform: scale(1);
-            }
-            50% { 
-                filter: blur(3px);
-                text-shadow: 0 0 20px rgba(128, 0, 255, 1);
-                transform: scale(1.1);
-            }
-        }
-        
-        .loading span {
+        .loading-text span {
             display: inline-block;
-            color: #9C27B0; /* Purple Neon */
-            font-size: 3.5rem; /* 25% Smaller */
-            font-weight: 900;
-            letter-spacing: 12px;
-            text-transform: uppercase;
-            animation: blurText 1.5s infinite alternate;
+            margin: 0 5px;
+            font-size: 50px;
+            font-weight: bold;
+            color: purple; /* Changed to Purple */
+            font-family: 'Quattrocento Sans', sans-serif;
+            animation: blur-text 1.5s infinite linear alternate;
         }
-        .loading span:nth-child(1) { animation-delay: 0s; }
-        .loading span:nth-child(2) { animation-delay: 0.3s; }
-        .loading span:nth-child(3) { animation-delay: 0.6s; }
-        .loading span:nth-child(4) { animation-delay: 0.9s; }
-        .loading span:nth-child(5) { animation-delay: 1.2s; }
-        .loading span:nth-child(6) { animation-delay: 1.5s; }
 
-        /* Player Container */
-        #videoContainer {
-            width: 100%;
-            height: 100vh;
-            display: none; /* Hide player initially */
+        .loading-text span:nth-child(1) { animation-delay: 0s; }
+        .loading-text span:nth-child(2) { animation-delay: 0.2s; }
+        .loading-text span:nth-child(3) { animation-delay: 0.4s; }
+        .loading-text span:nth-child(4) { animation-delay: 0.6s; }
+        .loading-text span:nth-child(5) { animation-delay: 0.8s; }
+        .loading-text span:nth-child(6) { animation-delay: 1s; }
+
+        @keyframes blur-text {
+            0% { filter: blur(0px); }
+            100% { filter: blur(4px); }
         }
+
+        /* Video Player */
         video {
             width: 100%;
-            height: 100%;
-            background: black;
+            height: auto;
+            max-width: 800px;
+            margin-top: 20px;
+            border: 2px solid #fff;
+            border-radius: 10px;
         }
     </style>
 </head>
-
 <body>
 
-    <!-- Stylish Blurry Loading Animation -->
-    <div id="loading" class="loading">
-        <span>M</span><span>A</span><span>D</span><span>A</span><span>R</span><span>A</span>
+    <!-- Loading Animation -->
+    <div class="loading" id="loading">
+        <div class="loading-text">
+            <span>M</span>
+            <span>A</span>
+            <span>D</span>
+            <span>A</span>
+            <span>R</span>
+            <span>A</span>
+        </div>
     </div>
 
-    <div id="videoContainer">
-        <video id="videoPlayer" controls autoplay></video>
-    </div>
+    <!-- Video Player with Secure Token -->
+    <video id="player" autoplay controls crossorigin playsinline poster="">
+        <source type="application/vnd.apple.mpegurl" src="stream.php?token=secure123">
+    </video>
 
-    <!-- HLS.js Library -->
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script>
+        // Hide loading screen after 3 seconds
+        setTimeout(() => {
+            document.getElementById('loading').style.display = 'none';
+        }, 3000);
 
-    <!-- Load External Player Script -->
-    <script src="player.js"></script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const video = document.getElementById("player");
+            const source = video.getElementsByTagName("source")[0].src;
+            const options = {};
+
+            if (Hls.isSupported()) {
+                const hls = new Hls({
+                    maxMaxBufferLength: 100
+                });
+                hls.loadSource(source);
+                hls.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
+                    const qualities = hls.levels.map(level => level.height);
+                    options.quality = {
+                        default: qualities[0],
+                        options: qualities,
+                        forced: true,
+                        onChange: quality => {
+                            hls.levels.forEach((level, index) => {
+                                if (level.height === quality) {
+                                    hls.currentLevel = index;
+                                }
+                            });
+                        }
+                    };
+                    new Plyr(video, options);
+                });
+                hls.attachMedia(video);
+                window.hls = hls;
+            } else {
+                new Plyr(video, options);
+            }
+        });
+    </script>
 
 </body>
 </html>
