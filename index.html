@@ -22,6 +22,7 @@
             margin: 0;
             padding: 0;
             text-align: center;
+            color: white;
         }
 
         /* Loading Screen */
@@ -69,6 +70,27 @@
             border: 2px solid #fff;
             border-radius: 10px;
         }
+
+        /* Join Channel Button */
+        .join-channel {
+            display: none; /* Initially hidden */
+            margin-top: 20px;
+        }
+
+        .join-channel a {
+            background-color: #0088cc;
+            color: white;
+            font-size: 16px;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .join-channel a:hover {
+            background-color: #0077b5;
+        }
     </style>
 </head>
 <body>
@@ -90,10 +112,16 @@
         <source type="application/vnd.apple.mpegurl" src="stream.php?token=secure123">
     </video>
 
+    <!-- Join Channel Button -->
+    <div class="join-channel" id="joinChannel">
+        <a href="https://t.me/+v0D91D8S9LNmMzE1" target="_blank">Join Telegram Channel</a>
+    </div>
+
     <script>
-        // Hide loading screen after 3 seconds
+        // Hide loading screen after 3 seconds and show Join Channel Button
         setTimeout(() => {
             document.getElementById('loading').style.display = 'none';
+            document.getElementById('joinChannel').style.display = 'block';
         }, 3000);
 
         document.addEventListener("DOMContentLoaded", () => {
