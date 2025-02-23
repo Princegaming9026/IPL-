@@ -5,60 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premium Player</title>
     <link rel="shortcut icon" href="https://i.postimg.cc/YC3Npf10/image.webp">
-    <link rel="stylesheet" href="style.css"> <!-- Fixed Link -->
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <script src="https://cdn.jwplayer.com/libraries/SAHhwvZq.js"></script>
-    <script src="config.js"></script> <!-- Config File for M3U8 Link -->
 
-    <!-- Loading Animation -->
+<body>
+
+    <!-- Stylish Blurry Loading Animation -->
     <div id="loading" class="loading">
         <span>M</span><span>A</span><span>D</span><span>A</span><span>R</span><span>A</span>
     </div>
 
-    <!-- Video Player -->
-    <div id="jwplayerDiv"></div>
+    <div id="videoContainer">
+        <video id="videoPlayer" controls autoplay></video>
+    </div>
 
-    <script>
-        async function playMedia() {
-            try {
-                const response = await fetch("config.js"); // Fetching M3U8 Link
-                const config = await response.json();
-                const m3u8Link = config.m3u8 || "https://jcevents.jiocinema.com/bpk-tv/JC_Sports18_1HD/JCHLS/hdntl=exp=1740378932~acl=%2F*~id=aaf549ec51984c86b32dd7de3e1334c7~data=hdntl~hmac=6029ae6ff841ccbb41d820a46f0a255ad02a678707e7c6ad9a63bd546d3ee24d/JC_Sports18_1HD-audio_108038_eng=108000-video=2297600.m3u8";
-
-                const playerInstance = jwplayer('jwplayerDiv').setup({
-                    file: m3u8Link,
-                    type: "hls",
-                    autostart: true,
-                    preload: "auto",
-                    repeat: true,
-                    mute: false,
-                    stretching: "exactfit",
-                    width: "100%",
-                    height: "100vh",
-                    cast: {},
-                    setPip: true,
-                    skin: {
-                        name: "Denver",
-                        active: "#FF0000",
-                        inactive: "#FFFFFF",
-                        background: "#000000"
-                    }
-                });
-
-                playerInstance.on('ready', function () {
-                    playerInstance.setFullscreen(true);
-                });
-            } catch (error) {
-                console.error("Error loading config:", error);
-            }
-        }
-
-        // Hide loading screen after 3 seconds
-        setTimeout(() => {
-            document.getElementById('loading').style.display = 'none';
-            playMedia();
-        }, 3000);
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="script.js"></script>
 </body>
 </html>
